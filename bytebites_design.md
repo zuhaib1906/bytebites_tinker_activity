@@ -1,27 +1,27 @@
 # ByteBites — UML Class Diagram (Revised)
 
 ```
-┌──────────────────────────────────────┐        ┌──────────────────────────────────────┐
-│               Customer               │        │               FoodItem               │
-│  «a person using the app»            │        │  «one product you can buy»           │
-├──────────────────────────────────────┤        ├──────────────────────────────────────┤
-│ - name: str                          │        │ - name: str                          │
-│ - purchase_history: List[Order]      │        │ - price: float                       │
-│     (their past orders)              │        │ - category: str  (e.g. "Drinks")     │
-├──────────────────────────────────────┤        │ - popularity_rating: float           │
-│ + add_purchase(order: Order)         │        │     (how well-liked it is)           │
-│ + is_real_user(): bool               │        ├──────────────────────────────────────┤
-│     (verify they're a real customer) │        │ + get_details(): str                 │
-└──────────────────────────────────────┘        └──────────────────────────────────────┘
-            │                                            ▲                      ▲
-            │ places                                     │ contains             │ selects
-            │ 0..*  (zero or more orders)                │ 0..* (all items)     │ 1..* (one or more)
-            ▼                                            │                      │
+┌──────────────────────────────────────┐        
+│               Customer               │        
+│  «a person using the app»            │        ┌──────────────────────────────────────┐
+├──────────────────────────────────────┤        │               FoodItem               │
+│ - name: str                          │        │  «one product you can buy»           │
+│ - purchase_history: List[Order]      │        ├──────────────────────────────────────┤
+│     (their past orders)              │        │ - name: str                          │
+├──────────────────────────────────────┤        │ - price: float                       │
+│ + add_purchase(order: Order)         │        │ - category: str  (e.g. "Drinks")     │
+│                                      │        │ - popularity_rating: float           │
+└──────────────────────────────────────┘        │     (how well-liked it is)           │
+            │                                   └──────────────────────────────────────┘
+            │                                           ▲                      ▲
+            │ places                                    │ contains             │ selects
+            │ 0..*  (zero or more orders)               │ 0..* (all items)     │ 1..* (one or more)
+            ▼                                           │                      │
 ┌──────────────────────────────────────┐        ┌───────┴──────────────────────────────┐
 │                Order                 │        │                 Menu                 │
 │  «one checkout / transaction»        │        │  «the full list of food we sell»     │
 ├──────────────────────────────────────┤        ├──────────────────────────────────────┤
-│ - items: List[FoodItem]              │◇──────▶ │ - items: List[FoodItem]              │
+│ - items: List[FoodItem]              │◇──────▶│ - items: List[FoodItem]              │
 │     (the items chosen)               │selected│     (every item offered)             │
 │ - total_cost: float                  │        ├──────────────────────────────────────┤
 │     (added up automatically)         │        │ + add_item(item: FoodItem)           │
@@ -41,7 +41,7 @@
 
 ## Notes on the mapping to the spec
 
-- **Customer** — `name` and `purchase_history`; `is_real_user()` supports "verify they are real users."
+- **Customer** — `name` and `purchase_history`
 - **FoodItem** — `name`, `price`, `category`, `popularity_rating` 
 - **Menu** — holds all items and `filter_by_category("Drinks" | "Desserts")`
 - **Order** — groups selected items into a single transaction and computes `total_cost`
