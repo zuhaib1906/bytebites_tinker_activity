@@ -26,6 +26,12 @@ class Menu:
     def filter_by_category(self, category):
         return [item for item in self.items if item.category == category]
 
+    def sort_by_price(self, descending=False):
+        return sorted(self.items, key=lambda item: item.price, reverse=descending)
+
+    def sort_by_popularity(self, descending=False):
+        return sorted(self.items, key=lambda item: item.popularity_rating, reverse=descending)
+
 
 class Order:
     """One checkout transaction: stores selected items and the total cost."""

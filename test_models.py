@@ -36,6 +36,29 @@ class TestMenu(unittest.TestCase):
         menu.add_item(self.water)
         self.assertEqual(menu.filter_by_category("Desserts"), [])
 
+    def _menu_of_three(self):
+        menu = Menu()
+        for item in (self.soda, self.water, self.cake):
+            menu.add_item(item)
+        return menu
+
+    def test_sort_by_price(self):
+        menu = self._menu_of_three()  # soda 2.00, water 1.00, cake 5.00
+        self.assertEqual(menu.sort_by_price(), [self.water, self.soda, self.cake])
+        self.assertEqual(menu.sort_by_price(descending=True), [self.cake, self.soda, self.water])
+
+    def test_sort_by_popularity(self):
+        menu = self._menu_of_three()  # soda 4.0, water 3.5, cake 4.9
+        self.assertEqual(menu.sort_by_popularity(), [self.water, self.soda, self.cake])
+        self.assertEqual(menu.sort_by_popularity(descending=True), [self.cake, self.soda, self.water])
+
+    def test_sort_is_non_mutating(self):
+        menu = self._menu_of_three()
+        original = [self.soda, self.water, self.cake]
+        menu.sort_by_price()
+        menu.sort_by_popularity()
+        self.assertEqual(menu.items, original)
+
 
 class TestOrder(unittest.TestCase):
     def test_compute_total_empty_order(self):
