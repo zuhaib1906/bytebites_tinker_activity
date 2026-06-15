@@ -24,3 +24,4 @@ This activity guided students through designing and implementing a simple food-o
 
 ## Demo
 
+![Test Result](Test_Result.png)
